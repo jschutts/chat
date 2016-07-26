@@ -73,7 +73,7 @@ $(function(){
 					return;
 				}
 
-				email = yourEmail.val();
+				email = "asd@hotmail.com";
 
 
 					showMessage("inviteSomebody");
@@ -103,7 +103,7 @@ $(function(){
 					alert("There already is a \"" + name + "\" in this room!");
 					return;
 				}
-				email = hisEmail.val();
+				email = "as123d@hotmail.com";
 
 					socket.emit('login', {user: name, avatar: email, id: id});
 			});
