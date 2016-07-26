@@ -130,6 +130,103 @@ module.exports = function(app,io){
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 
+			if (data.lastIndexOf("ADD") == -1)
+			        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+			        if (socket.username != 'bot'){
+			            var request2 = app2.textRequest(data,
+			            	{
+			            		sessionId: socket.id
+			            	});
+			            request2.on('response', function(response) {
+			                console.log(response);
+			                if (response.status.code == '200'){
+			                    socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: data.user, img: data.img});
+			                } else {
+			                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: data.user, img: data.img});
+			                    socket.broadcast.emit('alert');  
+			                }
+			            });
+			            request2.on('error', function(error) {
+			            console.log(error);
+			            });
+			            request2.end()
+			        }
+			        else if (socket.username == 'bot'){
+			            if (data.lastIndexOf("ADDE:") != -1){
+			                var drug = data.split(": ");
+			                console.log(drug);
+			                var synonyms =[];
+			                request.get({
+				                headers: {
+				                    'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
+				                    'Content-Type': 'application/json',
+				                    'Accept': 'application/json'
+				                },
+				                url: 'https://api.api.ai/v1/entities/drug',
+				            }, function(error, response, body){
+								//console.log(body);
+								body = JSON.parse(body);
+								console.log(drug);
+
+								console.log(body.entries.length);
+				            	console.log(body.entries[1].value);
+				                for (var i=0; i<body.entries.length; i++){
+				                	//console.log("hi");
+					                if (body.entries[i].value == drug[1]){
+					                	console.log(body.entries[i].synonyms[0]);
+					                	console.log('hello match here!');
+					                	for (var j=0; j<body.entries[i].synonyms.length; j++){
+					                		synonyms.push(body.entries[i].synonyms[j]);
+					                	}
+					                }
+					            }
+			////////////////////COPY AND PASTE///////////////////////////////
+					            if (drug[2] == null){
+					                request.put({
+					                	headers: {
+					                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
+					                        'Content-Type': 'application/json',
+					                        'Accept': 'application/json'
+					                    },
+					                    url: 'https://api.api.ai/v1/entities/drug/entries',
+					                    body: {
+					                    	"value": drug[1],
+					                    	"synonyms": [
+					                    		drug[1]
+					                    	]
+					                    },
+					                    json: true
+					                }, function(error, response, body){
+					                	console.log(body);
+					                });
+				            	}
+					            else {
+					            	synonyms.push(drug[2]);
+									request.put({
+					                	headers: {
+					                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
+					                        'Content-Type': 'application/json',
+					                        'Accept': 'application/json'
+					                    },
+					                    url: 'https://api.api.ai/v1/entities/drug/entries',
+					                    body: {
+					                    	"value": drug[1],
+					                    	"synonyms": synonyms
+					                    },
+					                    json: true
+					                }, function(error, response, body){
+					                	console.log(body);
+					                });
+					            }
+
+				            });
+			            }
+			        }
+
+
+
+
+
 			// When the server receives a message, it sends it to the other person in the room.
 			socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 		});
