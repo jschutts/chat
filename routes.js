@@ -4,9 +4,7 @@
 
 // Use the gravatar module, to turn email addresses into avatar images:
 
-var apiai = require('apiai');
-var app2 = apiai("0b25372273e042f29d6333faec6d4065");
-var request = require('request');
+
 
 
 var gravatar = require('gravatar');
