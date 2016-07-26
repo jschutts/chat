@@ -18,9 +18,6 @@ var io = require('socket.io').listen(app.listen(port));
 
 // Require the configuration and the routes files, and pass
 // the app and io as arguments to the returned functions.
-var apiai = require('apiai');
-var app2 = apiai("0b25372273e042f29d6333faec6d4065");
-var request = require('request');
 
 
 require('./config')(app, io);
