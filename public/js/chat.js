@@ -176,7 +176,7 @@ $(function(){
 	                } else {
 	                    createChatMessage('Hmm, I don\'t quite have an answer for you, let me check further.', data.user, data.img, moment());
 						scrollToBottom();
-	                    socket.broadcast.emit('alert');  
+	                    //socket.broadcast.emit('alert');  
 	                }
 	            });
 	            request2.on('error', function(error) {
