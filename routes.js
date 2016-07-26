@@ -134,16 +134,16 @@ module.exports = function(app,io, request, app2, apiai){
 			if (data.msg.lastIndexOf("ADD") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
-	            var request2 = app2.textRequest(data,
+	            var request2 = app2.textRequest(data.msg,
 	            	{
 	            		sessionId: socket.id
 	            	});
 	            request2.on('response', function(response) {
 	                console.log(response);
 	                if (response.status.code == '200'){
-	                	socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: data.user, img: data.img});
+	                	socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: "bot", img: data.img});
 	                } else {
-	                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: data.user, img: data.img});
+	                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: data.img});
 	                    socket.broadcast.emit('alert');  
 	                }
 	            });
