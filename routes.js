@@ -4,6 +4,11 @@
 
 // Use the gravatar module, to turn email addresses into avatar images:
 
+var apiai = require('apiai');
+var app2 = apiai("0b25372273e042f29d6333faec6d4065");
+var request = require('request');
+
+
 var gravatar = require('gravatar');
 
 // Export a function, so that we can pass 
@@ -130,7 +135,7 @@ module.exports = function(app,io){
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 
-			if (data.lastIndexOf("ADD") == -1)
+			if (data.msg.lastIndexOf("ADD") == -1)
 			    socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
 	            var request2 = app2.textRequest(data,
