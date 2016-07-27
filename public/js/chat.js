@@ -197,6 +197,10 @@ $(function(){
 		textarea.val("");
 	});
 
+	socket.on('botEmit', function(data){
+		socket.emit('msg', {msg: textarea.val(), user: name, img: img});
+	});
+
 	// Update the relative time stamps on the chat messages every minute
 
 	setInterval(function(){
