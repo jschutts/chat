@@ -134,7 +134,7 @@ module.exports = function(app,io, request, app2, apiai){
 			if (data.msg.lastIndexOf("ADD") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
-	        	console.log(data.msg);
+	        	console.log(data.user);
 	            var request2 = app2.textRequest(data.msg,
 	            	{
 	            		sessionId: socket.id
