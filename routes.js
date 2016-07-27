@@ -161,7 +161,7 @@ module.exports = function(app,io, request, app2, apiai){
 	        }
 	        else if (data.user == 'bot'){
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
-	                var drug = data.split(": ");
+	                var drug = data.msg.split(": ");
 	                console.log(drug);
 	                var synonyms =[];
 	                request.get({
