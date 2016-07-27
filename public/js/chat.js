@@ -201,8 +201,8 @@ $(function(){
 		socket.emit('msg', {msg: data.msg, user: data.user, img: data.img});
 	});
 
-	socket.on('alert', function(){
-        socket.emit('alert', prompt("Unkown user question, please intervene"));
+	socket.on('alert', function(data){
+        socket.emit('alert', prompt("Unkown user question, please intervene"), data);
     });
 
 	// Update the relative time stamps on the chat messages every minute

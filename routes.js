@@ -127,7 +127,7 @@ module.exports = function(app,io, request, app2, apiai){
 			socket.leave(socket.room);
 		});
 
-		socket.on('alert', function(message){
+		socket.on('alert', function(message, data){
 	        console.log('alerted');
 	        socket.broadcast.to(socket.room).emit('receive', {msg: message, user: "bot", img: data.img});
 	        socket.broadcast.to(socket.room).emit('botEmit', {msg: message, user: "bot", img: data.img});
@@ -151,7 +151,7 @@ module.exports = function(app,io, request, app2, apiai){
 	                } else {
 	                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: data.img});
 	                    socket.broadcast.to(socket.room).emit('botEmit', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: data.img});
-	                    socket.broadcast.emit('alert');  
+	                    socket.broadcast.emit('alert' , data);  
 	                }
 	            });
 	            request2.on('error', function(error) {
