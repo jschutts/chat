@@ -45,10 +45,10 @@ body {
 
 #logo {
 	text-decoration: none;
-	color:#E87722;
+	color:white;
 }
 #logo:visited {
-	color: #E87722;
+	color:white;
 }
 
 
@@ -58,7 +58,7 @@ body {
 
 .banner {
 	height: 70px;
-	background-color: #3c4446;
+	background-color:#E87722;
 	margin-bottom: 200px;
 }
 
