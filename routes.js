@@ -127,7 +127,11 @@ module.exports = function(app,io, request, app2, apiai){
 			socket.leave(socket.room);
 		});
 
-
+		socket.on('alert', function(message){
+	        console.log('alerted');
+	        socket.broadcast.to(socket.room).emit('receive', {msg: message, user: "bot", img: data.img});
+	        socket.broadcast.to(socket.room).emit('botEmit', {msg: message, user: "bot", img: data.img});
+    	});
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 
@@ -146,7 +150,7 @@ module.exports = function(app,io, request, app2, apiai){
 	                	socket.broadcast.to(socket.room).emit('botEmit', {msg: response.result.fulfillment.speech, user: "bot", img: data.img});
 	                } else {
 	                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: data.img});
-	                    socket.broadcast.to(socket.room).emit('botEmit', {msg: response.result.fulfillment.speech, user: "bot", img: data.img});
+	                    socket.broadcast.to(socket.room).emit('botEmit', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: data.img});
 	                    socket.broadcast.emit('alert');  
 	                }
 	            });
