@@ -218,7 +218,7 @@ $(function(){
 			who = 'me';
 		}
 		else {
-			who = 'you';
+			who = 'me';
 		}
 
 		var li = $(
@@ -232,8 +232,8 @@ $(function(){
 			'</li>');
 
 		// use the 'text' method to escape malicious user input
-		//li.find('p').text(msg);
-		//li.find('b').text(user);
+		li.find('p').text(msg);
+		li.find('b').text(user);
 
 		chats.append(li);
 
