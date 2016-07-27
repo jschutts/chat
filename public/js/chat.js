@@ -190,7 +190,7 @@ $(function(){
 			scrollToBottom();
 
 			// Send the message to the other person in the chat
-			socket.emit('msg', {msg: textarea.val(), user: "bot", img: img});
+			socket.emit('msg', {msg: textarea.val(), user: name, img: img});
 
 		}
 		// Empty the textarea
