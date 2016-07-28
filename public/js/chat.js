@@ -223,10 +223,10 @@ $(function(){
 		var who = '';
 
 		if(user===name) {
-			who = 'me';
+			who = 'you';
 		}
 		else {
-			who = 'you';
+			who = 'me';
 		}
 
 		var li = $(
