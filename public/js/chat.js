@@ -79,7 +79,7 @@ $(function(){
 					showMessage("inviteSomebody");
 
 					// call the server-side function 'login' and send user's parameters
-					socket.emit('login', {user: name, avatar: email, id: id});
+					socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
 			
 			});
 		}
