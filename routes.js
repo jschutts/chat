@@ -74,16 +74,15 @@ module.exports = function(app,io, request, app2, apiai){
 
 				socket.username = data.user;
 				socket.room = data.id;
-				socket.avatar = "../img/optum.png"
-
+				socket.avatar = "../img/optum.png";
 				// Tell the person what he should use for an avatar
 				if(data.name == "bot"){
-					socket.emit('img', socket.avatar);
+					socket.avatar = "../img/optum.png";
 				}
 				else{
-					socket.emit('img', socket.avatar);
+					socket.avatar = "";
 				}
-				
+				socket.emit('img', socket.avatar);
 
 
 				// Add the client to the room
