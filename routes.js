@@ -51,7 +51,7 @@ module.exports = function(app,io, request, app2, apiai){
 				socket.emit('peopleinchat', {
 					number: 1,
 					user: room[0].username,
-					avatar: "../img/mac.png",
+					avatar: room[0].avatar,
 					id: data
 				});
 			}

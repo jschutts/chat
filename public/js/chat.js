@@ -105,7 +105,7 @@ $(function(){
 				}
 				email = "as123d@hotmail.com";
 
-					socket.emit('login', {user: name, avatar: data.avatar, id: id});
+					socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
 			});
 		}
 
