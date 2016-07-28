@@ -60,9 +60,10 @@ $(function(){
 
 		if(data.number === 0){
 
-			showMessage("connected");
+			showMessage("inviteSomebody");
+			socket.emit('login', {user: "bot", avatar: "../img/optum.png", id: id});
 
-			loginForm.on('submit', function(e){
+			/*loginForm.on('submit', function(e){
 
 				e.preventDefault();
 
@@ -81,7 +82,7 @@ $(function(){
 					// call the server-side function 'login' and send user's parameters
 					socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
 			
-			});
+			});*/
 		}
 
 		else if(data.number === 1) {
