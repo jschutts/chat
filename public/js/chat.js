@@ -62,7 +62,7 @@ $(function(){
 
 			showMessage("inviteSomebody");
 			socket.emit('login', {user: "bot", avatar: "../img/optum.png", id: id});
-
+			data.number++;
 			/*loginForm.on('submit', function(e){
 
 				e.preventDefault();
