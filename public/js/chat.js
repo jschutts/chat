@@ -61,7 +61,7 @@ $(function(){
 		if(data.number === 0){
 
 			showMessage("inviteSomebody");
-			data.name = "bot";
+			name = "bot";
 			socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
 
 			/*loginForm.on('submit', function(e){
