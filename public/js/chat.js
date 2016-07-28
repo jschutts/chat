@@ -62,7 +62,7 @@ $(function(){
 
 			showMessage("connected");
 			data.name = "bot";
-			socket.emit('login', {user: "bot", avatar: "../img/optum.png", id: id});
+			socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
 
 			/*loginForm.on('submit', function(e){
 
