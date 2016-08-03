@@ -254,11 +254,13 @@ $(function(){
 	socket.on('alert', function(data){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
+        		if(v !== undefined){
         			//$.each(f,function(i,obj){
         			//	msg += i + " now " + obj;
         			//});
         			console.log(f);
         			socket.emit('alert', f, data);
+        		}
         	}
         })
         
