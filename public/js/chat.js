@@ -251,7 +251,7 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
-        socket.emit('alert', $.prompt(statesdemo,{
+        socket.emit('alert', $.prompt(substate,{
         	close: function(e,v,m,f){
         			$.each(f,function(i,obj){
         				str += i + " now " + obj;
