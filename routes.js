@@ -234,7 +234,7 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					socket.broadcast.to(socket.room).emit('receive', {msg: "Heyoooo", user: data.user, img: data.img});
+					socket.broadcast.to(socket.room).emit('botEmit', {msg: "Heyyoo", user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
