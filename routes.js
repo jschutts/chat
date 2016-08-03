@@ -164,8 +164,11 @@ module.exports = function(app,io, request, app2, apiai){
 	            request2.end()
 	        }
 	        else if (data.user == 'bot'){
+	        	var drugMetrics = [];
+
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
+	                drugMetrics.push(drug);
 	                console.log(drug);
 	                var synonyms =[];
 	                request.get({
@@ -176,14 +179,12 @@ module.exports = function(app,io, request, app2, apiai){
 		                },
 		                url: 'https://api.api.ai/v1/entities/drug',
 		            }, function(error, response, body){
-						//console.log(body);
 						body = JSON.parse(body);
 						console.log(drug);
 
 						console.log(body.entries.length);
 		            	console.log(body.entries[1].value);
 		                for (var i=0; i<body.entries.length; i++){
-		                	//console.log("hi");
 			                if (body.entries[i].value == drug[1]){
 			                	console.log(body.entries[i].synonyms[0]);
 			                	console.log('hello match here!');
@@ -234,7 +235,9 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					socket.broadcast.emit('botEmit', {msg: "Heyyoo", user: "bot", img: "../img/optum.png"});
+					
+
+					socket.broadcast.emit('botEmit', {msg: drugMetrics, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
