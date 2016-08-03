@@ -254,11 +254,11 @@ $(function(){
 	socket.on('alert', function(data){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
-        			$.each(f,function(i,obj){
-        				msg += i + " now " + obj;
-        			});
-        			console.log(msg);
-        			socket.emit('alert', msg, data);
+        			//$.each(f,function(i,obj){
+        			//	msg += i + " now " + obj;
+        			//});
+        			console.log(f);
+        			socket.emit('alert', f, data);
         	}
         })
         
