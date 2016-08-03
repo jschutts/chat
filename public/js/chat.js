@@ -44,11 +44,13 @@ $(function(){
 		noMessagesImage = $("#noMessagesImage");
 
 	// this is a chat prompt
+	var msg = 'Hmm I don\'t have an answer for you. You should consult your doctor.'
+
 	var substate = {
 		state0: {
-			title: 'Terms of Use',
-			html:'<p>These are the terms of use.  You should agree to these terms before proceeding.</p><p>(This is just an example)</p>',
-			buttons: { Cancel: false, Agree: true },
+			title: 'Unkown User Query',
+			html:'<p>I don\'t undersand the user\'s question, how should I respond?</p>',
+			buttons: { Unsure: false, Respond: true },
 			focus: 1,
 			submit:function(e,v,m,f){
 				if(v){
@@ -60,22 +62,31 @@ $(function(){
 			}
 		},
 		state1: {
-			html:'Are you sure?',
-			buttons: { No: -1, Yes: 0 },
+			html:'Enter a response for the user.<br /><label>First <input type="text" name="fname" value=""></label>',
+			buttons: { Back: -1, Submit: 0 },
 			focus: 1,
 			submit:function(e,v,m,f){
 				e.preventDefault();
-				if(v==0)
+				if(v==0){
+					msg = f;
 					$.prompt.goToState('state2');
+				}
 				else if(v==-1)
 					$.prompt.goToState('state0');
 			}
 		},
 		state2: {
-			title: "You're Done!",
-			html: "Congratulations, you've finished this example!",
-			buttons: { Close: 0 },
+			title: "Training",
+			html: "If you would like to train enter in a new entity or an existing entity and a synonym/new brand name."+
+			'<label>Entity <input type="text" name="lname" value=""></label><br /><label>Synonym <input type="text" name="lname" value=""></label><br />',
+			buttons: { Close: -1, Train: 0 },
 			focus: 0
+			submit:function(e,v,m,f){
+				if(v==0){
+					e.preventDefault();
+					console.log(f);
+				}
+			}
 		}
 	};
 
@@ -240,7 +251,14 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
-        socket.emit('alert', prompt("Unkown user question, please intervene"), data);
+        socket.emit('alert', $.prompt(statesdemo,{
+        	close: function(e,v,m,f){
+        			$.each(f,function(i,obj){
+        				str += i + " now " + obj;
+        			});
+        			console.log(str);
+        		}
+        	}, data);
     });
 
 	// Update the relative time stamps on the chat messages every minute
