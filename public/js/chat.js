@@ -257,8 +257,8 @@ $(function(){
         				str += i + " now " + obj;
         			});
         			console.log(str);
-        		}
-        	}, data);
+        	}
+        }), data);
     });
 
 	// Update the relative time stamps on the chat messages every minute
