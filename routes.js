@@ -233,6 +233,9 @@ module.exports = function(app,io, request, app2, apiai){
 
 		            });
 	            }
+	            else if(data.msg.lastIndexOf("METRICS") != -1){
+					socket.broadcast.to(socket.room).emit('receive', {msg: "Heyoooo", user: data.user, img: data.img});
+	            }
 	        }
 
 			// When the server receives a message, it sends it to the other person in the room.
