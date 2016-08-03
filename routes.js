@@ -168,8 +168,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
-	                console.log(drug);
-	                drugMetrics.push(drug);
+	                drugMetrics.push(drug[1]);
 	                console.log(drugMetrics);
 	                var synonyms =[];
 	                request.get({
