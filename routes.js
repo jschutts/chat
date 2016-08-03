@@ -139,7 +139,7 @@ module.exports = function(app,io, request, app2, apiai){
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 
-			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
+			if (data.msg.lastIndexOf("ADD") == -1 || data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
 	        	console.log(data.user);
