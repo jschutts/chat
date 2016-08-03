@@ -43,6 +43,42 @@ $(function(){
 		leftImage = $("#leftImage"),
 		noMessagesImage = $("#noMessagesImage");
 
+	// this is a chat prompt
+	var substate = {
+		state0: {
+			title: 'Terms of Use',
+			html:'<p>These are the terms of use.  You should agree to these terms before proceeding.</p><p>(This is just an example)</p>',
+			buttons: { Cancel: false, Agree: true },
+			focus: 1,
+			submit:function(e,v,m,f){
+				if(v){
+					e.preventDefault();
+					$.prompt.goToState('state1', true);
+					return false;
+				}
+				$.prompt.close();
+			}
+		},
+		state1: {
+			html:'Are you sure?',
+			buttons: { No: -1, Yes: 0 },
+			focus: 1,
+			submit:function(e,v,m,f){
+				e.preventDefault();
+				if(v==0)
+					$.prompt.goToState('state2');
+				else if(v==-1)
+					$.prompt.goToState('state0');
+			}
+		},
+		state2: {
+			title: "You're Done!",
+			html: "Congratulations, you've finished this example!",
+			buttons: { Close: 0 },
+			focus: 0
+		}
+	};
+
 
 	// on connection to server get the id of person's room
 	socket.on('connect', function(){
