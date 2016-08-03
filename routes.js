@@ -233,6 +233,9 @@ module.exports = function(app,io, request, app2, apiai){
 
 		            });
 	            }
+	            else if(data.msg.lastIndexOf("METRICS") != -1){
+					//socket.broadcast.emit('botEmit', {msg: "Heyyoo", user: "bot", img: "../img/optum.png"});
+	            }
 	        }
 
 			// When the server receives a message, it sends it to the other person in the room.
