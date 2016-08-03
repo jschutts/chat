@@ -56,7 +56,6 @@ $(function(){
 				if(v){
 					e.preventDefault();
 					$.prompt.goToState('state1', true);
-					return false;
 				}
 				$.prompt.close();
 			}
@@ -85,6 +84,7 @@ $(function(){
 				if(v==0){
 					e.preventDefault();
 					console.log(f);
+					$.prompt.close();
 				}
 			}
 		}
