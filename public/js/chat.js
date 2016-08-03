@@ -252,14 +252,16 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
-        socket.emit('alert', $.prompt(substate,{
+		$.prompt(substate,{
         	close: function(e,v,m,f){
         			$.each(f,function(i,obj){
         				msg += i + " now " + obj;
         			});
-        			console.log(str);
+        			console.log(msg);
+        			socket.emit('alert', msg, data);
         	}
-        }), data);
+        })
+        
     });
 
 	// Update the relative time stamps on the chat messages every minute
