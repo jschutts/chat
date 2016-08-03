@@ -139,7 +139,7 @@ module.exports = function(app,io, request, app2, apiai){
 		// Handle the sending of messages
 		socket.on('msg', function(data){
 
-			if (data.msg.lastIndexOf("ADD") == -1)
+			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
 	        	console.log(data.user);
@@ -164,8 +164,11 @@ module.exports = function(app,io, request, app2, apiai){
 	            request2.end()
 	        }
 	        else if (data.user == 'bot'){
+	        	var drugMetrics = [];
+
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
+	                drugMetrics.push(drug);
 	                console.log(drug);
 	                var synonyms =[];
 	                request.get({
@@ -176,14 +179,12 @@ module.exports = function(app,io, request, app2, apiai){
 		                },
 		                url: 'https://api.api.ai/v1/entities/drug',
 		            }, function(error, response, body){
-						//console.log(body);
 						body = JSON.parse(body);
 						console.log(drug);
 
 						console.log(body.entries.length);
 		            	console.log(body.entries[1].value);
 		                for (var i=0; i<body.entries.length; i++){
-		                	//console.log("hi");
 			                if (body.entries[i].value == drug[1]){
 			                	console.log(body.entries[i].synonyms[0]);
 			                	console.log('hello match here!');
@@ -234,7 +235,9 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					//socket.broadcast.emit('botEmit', {msg: "Heyyoo", user: "bot", img: "../img/optum.png"});
+					var print = drugMetrics.toString();
+					console.log(print);
+					socket.broadcast.emit('botEmit', {msg: print, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
