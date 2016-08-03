@@ -168,7 +168,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
-	                drugMetrics.push(drug);
+	                drugMetrics.push(drug[1]);
 	                console.log(drugMetrics);
 	                var synonyms =[];
 	                request.get({
@@ -235,8 +235,8 @@ module.exports = function(app,io, request, app2, apiai){
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
 					var print = drugMetrics.toString();
-					console.log(print);
-					socket.broadcast.emit('botEmit', {msg: "print", user: "bot", img: "../img/optum.png"});
+					console.log(drugMetrics);
+					socket.broadcast.emit('botEmit', {msg: print, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
