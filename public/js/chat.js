@@ -257,8 +257,8 @@ $(function(){
         			//$.each(f,function(i,obj){
         			//	msg += i + " now " + obj;
         			//});
-        			console.log(msg);
-        			socket.emit('alert', msg, data);
+        			console.log(f);
+        			socket.emit('alert', f, data);
         	}
         })
         
