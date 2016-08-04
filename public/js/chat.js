@@ -256,7 +256,7 @@ $(function(){
         		msg = msg.toString();
 	        	msg = msg.split(",");
 	        	console.log(msg);
-        		if (msg.length == 0){
+        		if (msg[0] == '' && msg[1] == ''){
         			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
         		}
         		else {
