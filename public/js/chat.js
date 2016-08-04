@@ -44,7 +44,7 @@ $(function(){
 		noMessagesImage = $("#noMessagesImage");
 
 	// this is a chat prompt
-	var msg = ''
+	var msg = [];
 
 	var substate = {
 		state0: {
@@ -252,7 +252,7 @@ $(function(){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
-        			msg += " item " + obj;
+        			msg.push(obj);
         		});
         		console.log(msg);
         		socket.emit('alert', msg, data);
