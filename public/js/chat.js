@@ -255,7 +255,7 @@ $(function(){
         			msg.push(obj);
         		});
         		console.log(msg);
-        		//socket.emit('alert', msg, data);
+        		socket.emit('alert', msg.toString(), data);
         	},
 			classes: {
 				box: '',
