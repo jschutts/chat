@@ -62,7 +62,7 @@ $(function(){
 			}
 		},
 		state1: {
-			html:'Enter a response for the user.<br /><label>First <input type="text" name="fname" value=""></label>',
+			html:'Enter a response for the user.<br /><label>Response <input type="text" name="fname" value=""></label>',
 			buttons: { Back: -1, Submit: 0 },
 			focus: 1,
 			submit:function(e,v,m,f){
@@ -249,6 +249,7 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
+		msg = [];
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
