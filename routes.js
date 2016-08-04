@@ -239,9 +239,24 @@ module.exports = function(app,io, request, app2, apiai){
 					var numDrugs = drugNew.length + drugMis.length;
 					var noDupNew = drugNew.unique();
 					var noDupMis = drugMis.unique();
-					var printNew = noDupNew.toString();
-					var printMis = noDupMis.toString();
-					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "\n" + "Number of Questions: " + numQ;
+					var printNew;
+					var printMis;
+					
+					if(noDupNew.length == 0){
+						printNew = "None";
+					}
+					else{
+						printNew = noDupNew.toString();
+					}
+					if(noDupMis.length == 0){
+						printMis = "None"
+					}
+					else{
+						printMis = noDupMis.toString();
+
+					}
+					
+					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "\n" + "Number of User Queries: " + numQ;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
