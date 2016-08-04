@@ -234,8 +234,8 @@ module.exports = function(app,io, request, app2, apiai){
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
 					var print = drugMetrics.toString();
-					console.log(drugMetrics);
-					socket.broadcast.emit('botEmit', {msg: print, user: "bot", img: "../img/optum.png"});
+
+					socket.broadcast.emit('botEmit', {msg: "Unknown Drugs: " + print, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
