@@ -261,7 +261,18 @@ $(function(){
         			console.log(f);
         			socket.emit('alert', f, data);
         		}
-        	}
+        	},
+			classes: {
+				box: '',
+				fade: '',
+				prompt: '',
+				close: '',
+				title: 'lead',
+				message: '',
+				buttons: '',
+				button: 'btn',
+				defaultButton: 'btn-primary'
+			}
         })
         
     });
