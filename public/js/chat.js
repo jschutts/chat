@@ -44,7 +44,7 @@ $(function(){
 		noMessagesImage = $("#noMessagesImage");
 
 	// this is a chat prompt
-	var msg = 'Hmm I don\'t have an answer for you. You should consult your doctor.'
+	var msg = ''
 
 	var substate = {
 		state0: {
