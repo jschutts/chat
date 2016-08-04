@@ -6,7 +6,8 @@
 
 
 var gravatar = require('gravatar');
-var drugMetrics = [];
+var drugNew = [];
+var drugMis = [];
 // Export a function, so that we can pass 
 // the app and io instances from the app.js file:
 
@@ -167,7 +168,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
-	                drugMetrics.push(drug[1]);
+	                
 	                var synonyms =[];
 	                request.get({
 		                headers: {
@@ -192,6 +193,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                }
 			            }
 			            if (drug[2] == null){
+			                drugNew.push(drug[1]);
 			                request.put({
 			                	headers: {
 			                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
@@ -211,6 +213,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                });
 		            	}
 			            else {
+			            	drugMis.push(drug[1]);
 			            	synonyms.push(drug[2]);
 							request.put({
 			                	headers: {
@@ -232,10 +235,13 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					var numDrugs = drugMetrics.length;
-					var noDup = drugMetrics.unique();
-					var print = noDup.toString();
-					var mString = "Drugs that were new or misspelled: " + print + "\n\n" +"Number of drug mistakes: " + numDrugs;
+					var numDrugs = drugNew.length + drugMis.length;
+					var noDupNew = drugNew.unique();
+					var noDupMis = drugMis.unique();
+					var printNew = noDupNew.toString();
+					var printMis = noDupMis.toString();
+					var mString = "Drugs that were new: " + printNew + "\n" + \
+					"Drugs that were misspelled: " + printMis + "\n" +"Number of drug additions: " + numDrugs;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
