@@ -240,8 +240,7 @@ module.exports = function(app,io, request, app2, apiai){
 					var noDupMis = drugMis.unique();
 					var printNew = noDupNew.toString();
 					var printMis = noDupMis.toString();
-					var mString = "Drugs that were new: " + printNew + "\n" + \
-					"Drugs that were misspelled: " + printMis + "\n" +"Number of drug additions: " + numDrugs;
+					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs that were misspelled: " + printMis + "\n" +"Number of drug additions: " + numDrugs;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
