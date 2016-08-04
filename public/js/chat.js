@@ -84,7 +84,6 @@ $(function(){
 			submit:function(e,v,m,f){
 				if(v==0){
 					console.log(f);
-					return true;
 				}
 			}
 		}
