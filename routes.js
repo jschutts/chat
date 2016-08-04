@@ -233,7 +233,7 @@ module.exports = function(app,io, request, app2, apiai){
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
 					var numDrugs = drugMetrics.length;
-					var noDup = drugMetrics.unique
+					var noDup = drugMetrics.unique();
 					var print = noDup.toString();
 					var mString = "Drugs that were new or misspelled: " + print + "\n\n" +"Number of drug mistakes: " + numDrugs;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
