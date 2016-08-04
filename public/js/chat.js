@@ -253,7 +253,7 @@ $(function(){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
-        			msg += i + " now " + obj;
+        			msg += " item " + obj;
         		});
         		console.log(msg);
         		socket.emit('alert', msg, data);
