@@ -253,14 +253,19 @@ $(function(){
         		$.each(f,function(i,obj){
         			msg.push(obj);
         		});
+        		msg[0] = msg[0].replace(/,/g , ";");
         		msg = msg.toString();
 	        	msg = msg.split(",");
 	        	console.log(msg);
         		if (msg[0] == '' && msg[1] == ''){
         			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
         		}
+        		else if (msg[1] == ''){
+        			msg = msg[0];
+        		}
         		else {
-	        		msg = msg.toString();
+        			socket.emit('alert', msg[0], data);
+	        		msg = "ADDE: " + msg[1] + ": " + msg[2];
         		}
         		socket.emit('alert', msg, data);
         	},
