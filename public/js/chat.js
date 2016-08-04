@@ -54,7 +54,6 @@ $(function(){
 			focus: 1,
 			submit:function(e,v,m,f){
 				if(v){
-					e.preventDefault();
 					$.prompt.goToState('state1', true);
 					return false;
 				}
