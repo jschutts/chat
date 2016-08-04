@@ -78,9 +78,9 @@ $(function(){
 		state2: {
 			title: "Training",
 			html: "If you would like to train enter in a new entity or an existing entity and a synonym/new brand name."+
-			'<label>Entity <input type="text" name="lname" value=""></label><br /><label>Synonym <input type="text" name="lname" value=""></label><br />',
+			'<br /><label>Entity <input type="text" name="lname" value=""></label><br /><label>Synonym <input type="text" name="lname" value=""></label><br />',
 			buttons: { Close: -1, Train: 0 },
-			focus: 0,
+			focus: 1,
 			submit:function(e,v,m,f){
 				if(v==0){
 					e.preventDefault();
@@ -273,8 +273,7 @@ $(function(){
 				button: 'btn',
 				defaultButton: 'btn-primary'
 			}
-        })
-        
+        });  
     });
 
 	// Update the relative time stamps on the chat messages every minute
