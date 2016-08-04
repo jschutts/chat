@@ -133,6 +133,7 @@ module.exports = function(app,io, request, app2, apiai){
 			socket.leave(socket.room);
 		});
 
+		//Handles the alerts to the bot side of the chat
 		socket.on('alert', function(message, data){
 	        console.log('alerted');
 	        socket.broadcast.to(socket.room).emit('receive', {msg: message, user: "bot", img: "../img/optum.png"});
@@ -142,8 +143,8 @@ module.exports = function(app,io, request, app2, apiai){
 		socket.on('msg', function(data){
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+	       	//Handles user queries
 	        if (data.user != 'bot'){
-	        	console.log(data.user);
 	            var request2 = app2.textRequest(data.msg,
 	            	{
 	            		sessionId: socket.id
@@ -165,6 +166,7 @@ module.exports = function(app,io, request, app2, apiai){
 	            });
 	            request2.end()
 	        }
+	        //Handles the bot training and metrics function of the proof of concept
 	        else if (data.user == 'bot'){
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
@@ -180,7 +182,6 @@ module.exports = function(app,io, request, app2, apiai){
 		                url: 'https://api.api.ai/v1/entities/drug',
 		            }, function(error, response, body){
 						body = JSON.parse(body);
-						console.log(drug);
 
 						console.log(body.entries.length);
 		            	console.log(body.entries[1].value);
@@ -265,6 +266,7 @@ module.exports = function(app,io, request, app2, apiai){
 		});
 	});
 };
+//Returns an array without duplicates
 Array.prototype.unique = function() {
     return this.reduce(function(accum, current) {
         if (accum.indexOf(current) < 0) {
