@@ -255,6 +255,9 @@ $(function(){
         			msg.push(obj);
         		});
         		console.log(msg);
+        		msg = msg.toString();
+        		msg = msg.split(",");
+        		console.log(msg);
         		socket.emit('alert', msg.toString(), data);
         	},
 			classes: {
