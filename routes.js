@@ -6,7 +6,9 @@
 
 
 var gravatar = require('gravatar');
-var drugMetrics = [];
+var drugNew = [];
+var drugMis = [];
+var numQ = 0;
 // Export a function, so that we can pass 
 // the app and io instances from the app.js file:
 
@@ -138,10 +140,10 @@ module.exports = function(app,io, request, app2, apiai){
     	});
 		// Handle the sending of messages
 		socket.on('msg', function(data){
-
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
+	        	numQ++;
 	        	console.log(data.user);
 	            var request2 = app2.textRequest(data.msg,
 	            	{
@@ -167,8 +169,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
-	                drugMetrics.push(drug[1]);
-	                console.log(drugMetrics);
+	                
 	                var synonyms =[];
 	                request.get({
 		                headers: {
@@ -193,6 +194,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                }
 			            }
 			            if (drug[2] == null){
+			                drugNew.push(drug[1]);
 			                request.put({
 			                	headers: {
 			                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
@@ -212,6 +214,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                });
 		            	}
 			            else {
+			            	drugMis.push(drug[1]);
 			            	synonyms.push(drug[2]);
 							request.put({
 			                	headers: {
@@ -233,9 +236,13 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					var print = drugMetrics.toString();
-
-					socket.broadcast.emit('botEmit', {msg: "Unknown Drugs: " + print + "/n" + "Number of drug mistakes: " + drugMetrics.length(), user: "bot", img: "../img/optum.png"});
+					var numDrugs = drugNew.length + drugMis.length;
+					var noDupNew = drugNew.unique();
+					var noDupMis = drugMis.unique();
+					var printNew = noDupNew.toString();
+					var printMis = noDupMis.toString();
+					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "\n" + "Number of Questions: " + numQ;
+					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
@@ -243,7 +250,14 @@ module.exports = function(app,io, request, app2, apiai){
 		});
 	});
 };
-
+Array.prototype.unique = function() {
+    return this.reduce(function(accum, current) {
+        if (accum.indexOf(current) < 0) {
+            accum.push(current);
+        }
+        return accum;
+    }, []);
+}
 function findClientsSocket(io,roomId, namespace) {
 	var res = [],
 		ns = io.of(namespace ||"/");    // the default namespace is "/"
