@@ -143,13 +143,13 @@ module.exports = function(app,io, request, app2, apiai){
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
-	        	numQ++;
 	        	console.log(data.user);
 	            var request2 = app2.textRequest(data.msg,
 	            	{
 	            		sessionId: socket.id
 	            	});
 	            request2.on('response', function(response) {
+	                numQ++;
 	                console.log(response);
 	                if (response.status.code == '200'){
 	                	socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: "bot", img: "../img/optum.png"});
