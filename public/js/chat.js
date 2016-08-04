@@ -251,6 +251,7 @@ $(function(){
 	socket.on('alert', function(data){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
+        		msg = [];
         		$.each(f,function(i,obj){
         			msg.push(obj);
         		});
