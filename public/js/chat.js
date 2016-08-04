@@ -255,11 +255,16 @@ $(function(){
         		$.each(f,function(i,obj){
         			msg.push(obj);
         		});
-        		console.log(msg);
         		msg = msg.toString();
-        		msg = msg.split(",");
-        		console.log(msg);
-        		socket.emit('alert', msg.toString(), data);
+	        	msg = msg.split(",");
+	        	console.log(msg);
+        		if (msg.length == 0){
+        			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
+        		}
+        		else {
+	        		msg = msg.toString();
+        		}
+        		socket.emit('alert', msg, data);
         	},
 			classes: {
 				box: '',
