@@ -58,7 +58,6 @@ $(function(){
 					$.prompt.goToState('state1', true);
 					return false;
 				}
-				$.prompt.close();
 			}
 		},
 		state1: {
