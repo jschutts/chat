@@ -68,7 +68,6 @@ $(function(){
 			submit:function(e,v,m,f){
 				e.preventDefault();
 				if(v==0){
-					msg = f;
 					$.prompt.goToState('state2');
 				}
 				else if(v==-1)
