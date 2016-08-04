@@ -8,6 +8,7 @@
 var gravatar = require('gravatar');
 var drugNew = [];
 var drugMis = [];
+var numQ = 0;
 // Export a function, so that we can pass 
 // the app and io instances from the app.js file:
 
@@ -139,7 +140,7 @@ module.exports = function(app,io, request, app2, apiai){
     	});
 		// Handle the sending of messages
 		socket.on('msg', function(data){
-
+			numQ++;
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
@@ -240,7 +241,7 @@ module.exports = function(app,io, request, app2, apiai){
 					var noDupMis = drugMis.unique();
 					var printNew = noDupNew.toString();
 					var printMis = noDupMis.toString();
-					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs that were misspelled: " + printMis + "\n" +"Number of drug additions: " + numDrugs;
+					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "Number of Questions: " + numQ;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
