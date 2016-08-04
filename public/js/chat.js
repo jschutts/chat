@@ -44,7 +44,7 @@ $(function(){
 		noMessagesImage = $("#noMessagesImage");
 
 	// this is a chat prompt
-	var msg = 'Hmm I don\'t have an answer for you. You should consult your doctor.'
+	var msg = [];
 
 	var substate = {
 		state0: {
@@ -62,13 +62,12 @@ $(function(){
 			}
 		},
 		state1: {
-			html:'Enter a response for the user.<br /><label>First <input type="text" name="fname" value=""></label>',
+			html:'Enter a response for the user.<br /><label>Response <input type="text" name="fname" value=""></label>',
 			buttons: { Back: -1, Submit: 0 },
 			focus: 1,
 			submit:function(e,v,m,f){
 				e.preventDefault();
 				if(v==0){
-					msg = f;
 					$.prompt.goToState('state2');
 				}
 				else if(v==-1)
@@ -253,7 +252,7 @@ $(function(){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
-        			msg += " item " + obj;
+        			msg.push(obj);
         		});
         		console.log(msg);
         		socket.emit('alert', msg, data);
