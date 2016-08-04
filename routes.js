@@ -232,8 +232,10 @@ module.exports = function(app,io, request, app2, apiai){
 		            });
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
-					var print = drugMetrics.toString();
-					var mString = "Drugs that were new or misspelled: " + print + "\n\n" +"Number of drug mistakes: " + drugMetrics.length;
+					var numDrugs = drugMetrics.length;
+					var noDup = drugMetrics.unique
+					var print = noDup.toString();
+					var mString = "Drugs that were new or misspelled: " + print + "\n\n" +"Number of drug mistakes: " + numDrugs;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
@@ -242,7 +244,14 @@ module.exports = function(app,io, request, app2, apiai){
 		});
 	});
 };
-
+Array.prototype.unique = function() {
+    return this.reduce(function(accum, current) {
+        if (accum.indexOf(current) < 0) {
+            accum.push(current);
+        }
+        return accum;
+    }, []);
+}
 function findClientsSocket(io,roomId, namespace) {
 	var res = [],
 		ns = io.of(namespace ||"/");    // the default namespace is "/"
