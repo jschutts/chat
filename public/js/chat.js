@@ -252,10 +252,10 @@ $(function(){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
-        			msg.push(obj);
+        			//msg.push(obj);
         		});
-        		console.log(msg);
-        		socket.emit('alert', msg, data);
+        		//console.log(msg);
+        		//socket.emit('alert', msg, data);
         	},
 			classes: {
 				box: '',
