@@ -6,7 +6,7 @@
 
 
 var gravatar = require('gravatar');
-
+var drugMetrics = [];
 // Export a function, so that we can pass 
 // the app and io instances from the app.js file:
 
@@ -164,7 +164,6 @@ module.exports = function(app,io, request, app2, apiai){
 	            request2.end()
 	        }
 	        else if (data.user == 'bot'){
-	        	var drugMetrics = [];
 
 	            if (data.msg.lastIndexOf("ADDE:") != -1){
 	                var drug = data.msg.split(": ");
@@ -235,8 +234,8 @@ module.exports = function(app,io, request, app2, apiai){
 	            }
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
 					var print = drugMetrics.toString();
-					console.log(drugMetrics);
-					socket.broadcast.emit('botEmit', {msg: print, user: "bot", img: "../img/optum.png"});
+
+					socket.broadcast.emit('botEmit', {msg: "Unknown Drugs: " + print + "/n" + "Number of drug mistakes: " + drugMetrics.length(), user: "bot", img: "../img/optum.png"});
 	            }
 	        }
 
