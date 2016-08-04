@@ -256,7 +256,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 					}
 					
-					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "\n" + "Number of User Queries: " + numQ;
+					var mString = "Drugs that were new: " + printNew + " | " + "Drugs That Were Misspelled: " + printMis + " | " +"Number of Drug Additions: " + numDrugs + " | " + "Number of User Queries: " + numQ;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
