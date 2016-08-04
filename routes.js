@@ -143,13 +143,13 @@ module.exports = function(app,io, request, app2, apiai){
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 	        if (data.user != 'bot'){
-	        	numQ++;
 	        	console.log(data.user);
 	            var request2 = app2.textRequest(data.msg,
 	            	{
 	            		sessionId: socket.id
 	            	});
 	            request2.on('response', function(response) {
+	                numQ++;
 	                console.log(response);
 	                if (response.status.code == '200'){
 	                	socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: "bot", img: "../img/optum.png"});
@@ -239,9 +239,24 @@ module.exports = function(app,io, request, app2, apiai){
 					var numDrugs = drugNew.length + drugMis.length;
 					var noDupNew = drugNew.unique();
 					var noDupMis = drugMis.unique();
-					var printNew = noDupNew.toString();
-					var printMis = noDupMis.toString();
-					var mString = "Drugs that were new: " + printNew + "\n" + "Drugs That Were Misspelled: " + printMis + "\n" +"Number of Drug Additions: " + numDrugs + "\n" + "Number of Questions: " + numQ;
+					var printNew;
+					var printMis;
+					
+					if(noDupNew.length == 0){
+						printNew = "None";
+					}
+					else{
+						printNew = noDupNew.toString();
+					}
+					if(noDupMis.length == 0){
+						printMis = "None"
+					}
+					else{
+						printMis = noDupMis.toString();
+
+					}
+					
+					var mString = "Drugs that were new: " + printNew + " | " + "Drugs That Were Misspelled: " + printMis + " | " +"Number of Drug Additions: " + numDrugs + " | " + "Number of User Queries: " + numQ;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }
 	        }
