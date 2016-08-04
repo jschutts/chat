@@ -249,7 +249,7 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
-		msg = [];
+		//msg = [];
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		$.each(f,function(i,obj){
