@@ -207,9 +207,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                    url: 'https://api.api.ai/v1/entities/drug/entries',
 			                    body: {
 			                    	"value": drug[1],
-			                    	"synonyms": [
-			                    		drug[1]
-			                    	]
+			                    	"synonyms": synonyms
 			                    },
 			                    json: true
 			                }, function(error, response, body){
