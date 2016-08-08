@@ -262,6 +262,8 @@ $(function(){
         		}
         		else if (msg[1] == ''){
         			msg = msg[0];
+        			left, right = msg.split(",",1);
+        			msg = left;
         		}
         		else {
         			socket.emit('alert', msg[0], data);
