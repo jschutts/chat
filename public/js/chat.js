@@ -69,7 +69,7 @@ $(function(){
 					$.prompt.goToState('state2', true);
 				}
 				else if(v==-1)
-					$.prompt.goToState('state0');
+					$.prompt.prevState();
 			}
 		},
 		state2: {
