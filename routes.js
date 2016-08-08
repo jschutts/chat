@@ -211,6 +211,8 @@ module.exports = function(app,io, request, app2, apiai){
 			                    },
 			                    json: true
 			                }, function(error, response, body){
+			                	console.log(drug[1]);
+			                	console.log("error below");
 			                	console.log(body);
 			                });
 		            	}
