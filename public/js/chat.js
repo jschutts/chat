@@ -66,7 +66,7 @@ $(function(){
 			submit:function(e,v,m,f){
 				e.preventDefault();
 				if(v==0){
-					$.prompt.goToState('state2');
+					$.prompt.goToState('state2', true);
 				}
 				else if(v==-1)
 					$.prompt.goToState('state0');
