@@ -214,6 +214,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                	console.log(drug[2]);
 			                	console.log("error below");
 			                	console.log(body);
+			                	console.log(error);
 			                });
 		            	}
 			            else {
@@ -235,6 +236,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                	console.log(drug[2]);
 			                	console.log("error below");
 			                	console.log(body);
+			                	console.log(error);
 			                });
 			            }
 
