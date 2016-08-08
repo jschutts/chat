@@ -257,13 +257,14 @@ $(function(){
         		msg = msg.toString();
 	        	msg = msg.split(",");
 	        	console.log(msg);
+	        	console.log(msg[0]);
         		if (msg[0] == '' && msg[1] == ''){
         			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
         		}
         		else if (msg[1] == ''){
         			msg = msg[0];
-        			left, right = msg.split(",",1);
-        			msg = left;
+        			//left, right = msg.split(",",1);
+        			//msg = left;
         		}
         		else {
         			socket.emit('alert', msg[0], data);
