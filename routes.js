@@ -186,7 +186,7 @@ module.exports = function(app,io, request, app2, apiai){
 						console.log(body.entries.length);
 		            	console.log(body.entries[1].value);
 		                for (var i=0; i<body.entries.length; i++){
-			                if (body.entries[i].value == drug[1]){
+			                if (body.entries[i].value == drug[0]){
 			                	console.log(body.entries[i].synonyms[0]);
 			                	console.log('hello match here!');
 			                	for (var j=0; j<body.entries[i].synonyms.length; j++){
@@ -194,8 +194,8 @@ module.exports = function(app,io, request, app2, apiai){
 			                	}
 			                }
 			            }
-			            if (drug[2] == null){
-			                drugNew.push(drug[1]);
+			            if (drug[1] == null){
+			                drugNew.push(drug[0]);
 			                request.put({
 			                	headers: {
 			                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
@@ -204,9 +204,9 @@ module.exports = function(app,io, request, app2, apiai){
 			                    },
 			                    url: 'https://api.api.ai/v1/entities/drug/entries',
 			                    body: {
-			                    	"value": drug[1],
+			                    	"value": drug[0],
 			                    	"synonyms": [
-			                    		drug[1]
+			                    		drug[0]
 			                    	]
 			                    },
 			                    json: true
@@ -217,8 +217,8 @@ module.exports = function(app,io, request, app2, apiai){
 			                });
 		            	}
 			            else {
-			            	drugMis.push(drug[1]);
-			            	synonyms.push(drug[2]);
+			            	drugMis.push(drug[0]);
+			            	synonyms.push(drug[1]);
 							request.put({
 			                	headers: {
 			                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
@@ -227,12 +227,12 @@ module.exports = function(app,io, request, app2, apiai){
 			                    },
 			                    url: 'https://api.api.ai/v1/entities/drug/entries',
 			                    body: {
-			                    	"value": drug[1],
+			                    	"value": drug[0],
 			                    	"synonyms": synonyms
 			                    },
 			                    json: true
 			                }, function(error, response, body){
-			                	console.log(drug[2]);
+			                	console.log(drug[1]);
 			                	console.log("error below");
 			                	console.log(body);
 			                });
