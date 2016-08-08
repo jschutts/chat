@@ -260,17 +260,17 @@ $(function(){
 	        	console.log(msg[0]);
         		if (msg[0] == '' && msg[1] == ''){
         			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
+        			socket.emit('alert', msg, data);
         		}
         		else if (msg[1] == ''){
         			msg = msg[0];
-        			//left, right = msg.split(",",1);
-        			//msg = left;
+        			socket.emit('alert', msg, data);
         		}
         		else {
         			socket.emit('alert', msg[0], data);
 	        		msg = "ADDE: " + msg[1] + ": " + msg[2];
+	        		socket.emit('msg', {msg: msg, user: "bot", img: "../img/optum.png"});
         		}
-        		socket.emit('alert', msg, data);
         	},
 			classes: {
 				box: '',
