@@ -76,7 +76,7 @@ $(function(){
 			title: "Training",
 			html: "If you would like to train enter in a new entity or an existing entity and a synonym/new brand name."+
 			'<br /><label>Entity <input type="text" name="lname" value=""></label><br /><label>Synonym <input type="text" name="lname" value=""></label><br />',
-			buttons: { Close: -1, Train: 0 },
+			buttons: { "Don\'t Train": -1, Train: 0 },
 			focus: 1,
 			submit:function(e,v,m,f){
 				if(v==0){
