@@ -247,7 +247,7 @@ $(function(){
         		else {
         			socket.emit('alert', msg[0], data);
 	        		msg = "ADDE: " + msg[1] + ": " + msg[2];
-	        		cosnole.log(msg);
+	        		console.log(msg);
 	        		socket.emit('msg', {msg: msg, user: "bot", img: "../img/optum.png"});
 	        		//socket.emit('msg', );
         		}
