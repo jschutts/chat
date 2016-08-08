@@ -106,27 +106,6 @@ $(function(){
 			showMessage("inviteSomebody");
 			name = "bot";
 			socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
-
-			/*loginForm.on('submit', function(e){
-
-				e.preventDefault();
-
-				name = $.trim(yourName.val());
-				
-				if(name.length < 1){
-					alert("Please enter a nick name longer than 1 character!");
-					return;
-				}
-
-				email = "asd@hotmail.com";
-
-
-					showMessage("inviteSomebody");
-
-					// call the server-side function 'login' and send user's parameters
-					socket.emit('login', {user: name, avatar: "../img/optum.png", id: id});
-			
-			});*/
 		}
 
 		else if(data.number === 1) {
