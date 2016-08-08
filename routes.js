@@ -169,7 +169,7 @@ module.exports = function(app,io, request, app2, apiai){
 	        //Handles the bot training and metrics function of the proof of concept
 	        else if (data.user == 'bot'){
 
-	            if (data.msg.lastIndexOf("ADDE") != -1){
+	            if (data.msg.lastIndexOf("ADD") != -1){
 	                var drug = data.msg.split(": ");
 	                
 	                var synonyms =[];
