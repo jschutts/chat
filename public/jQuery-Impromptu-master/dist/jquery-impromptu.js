@@ -73,7 +73,7 @@
 		focus: 0,
 		defaultButton: 0,
 		useiframe: false,
-		top: '0%',
+		top: '15%',
 		position: {
 			container: null,
 			x: null,
