@@ -197,7 +197,7 @@ module.exports = function(app,io, request, app2, apiai){
 			            console.log(synonyms);
 			            console.log(drug);
 			            if (drug[2] == null){
-			                drugNew.push(drug[1]);
+			                //drugNew.push(drug[1]);
 			                request.put({
 			                	headers: {
 			                        'Authorization': 'Bearer b9c554f76c3b471780436428dd458afd',
@@ -217,7 +217,7 @@ module.exports = function(app,io, request, app2, apiai){
 			                });
 		            	}
 			            else {
-			            	drugMis.push(drug[1]);
+			            	//drugMis.push(drug[1]);
 			            	synonyms.push(drug[2]);
 							request.put({
 			                	headers: {
