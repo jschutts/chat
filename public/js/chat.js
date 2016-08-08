@@ -225,6 +225,7 @@ $(function(){
 	});
 
 	socket.on('alert', function(data){
+		$("html, body").animate({ scrollTop: $('#jqibox').height()-$(window).height() },-1000);
 		$.prompt(substate,{
         	close: function(e,v,m,f){
         		msg = [];
