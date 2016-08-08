@@ -248,7 +248,7 @@ $(function(){
         			socket.emit('alert', msg[0], data);
 	        		msg = "ADDE: " + msg[1] + ": " + msg[2];
 	        		console.log(msg);
-	        		socket.emit('msg', {msg: msg, user: "bot", img: "../img/optum.png"});
+	        		socket.emit('msg', {msg: msg, user: 'bot', img: "../img/optum.png"});
 	        		//socket.emit('msg', );
         		}
         	},
