@@ -2,15 +2,11 @@
 // for the two main URL endpoints of the application - /create and /chat/:id
 // and listens for socket.io messages.
 
-// Use the gravatar module, to turn email addresses into avatar images:
-
-
-var gravatar = require('gravatar');
 var drugNew = [];
 var drugMis = [];
 var numQ = 0;
 // Export a function, so that we can pass 
-// the app and io instances from the app.js file:
+// the app, api.ai and io instances from the app.js file:
 
 module.exports = function(app,io, request, app2, apiai){
 
@@ -76,15 +72,9 @@ module.exports = function(app,io, request, app2, apiai){
 
 				socket.username = data.user;
 				socket.room = data.id;
-				// Tell the person what he should use for an avatar
-				//if(data.user == "bot"){
-					socket.avatar = data.avatar;
-				//}
-				/*else{
-					socket.avatar = "";
-				}*/
+				socket.avatar = data.avatar;
+	
 				socket.emit('img', socket.avatar);
-
 
 				// Add the client to the room
 				socket.join(data.id);
@@ -133,20 +123,21 @@ module.exports = function(app,io, request, app2, apiai){
 			socket.leave(socket.room);
 		});
 
-		//Handles the alerts to the bot side of the chat
+		//Handles the alerts from the client side nurse chat instance to the bot side of the chat
 		socket.on('alert', function(message, data){
-	        console.log('alerted');
 	        socket.broadcast.to(socket.room).emit('receive', {msg: message, user: "bot", img: "../img/optum.png"});
 	        socket.broadcast.to(socket.room).emit('botEmit', {msg: message, user: "bot", img: "../img/optum.png"});
     	});
 		// Handle the sending of messages
 		socket.on('msg', function(data){
+			//If the message doesn't contain keywords ADD or METRIC, emit it to the chat for the user to see
 			if (data.msg.lastIndexOf("ADD") == -1 && data.msg.lastIndexOf("METRIC") == -1)
 	        	socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
-	       	//Handles user queries
+	       	//Handles user queries (users who aren't the nurse/bot)
 	        if (data.user != 'bot'){
 	            var request2 = app2.textRequest(data.msg,
 	            	{
+	            		//Establish a unique API.AI session
 	            		sessionId: socket.id
 	            	});
 	            request2.on('response', function(response) {
@@ -155,9 +146,10 @@ module.exports = function(app,io, request, app2, apiai){
 	                if (response.status.code == '200'){
 	                	socket.broadcast.to(socket.room).emit('receive', {msg: response.result.fulfillment.speech, user: "bot", img: "../img/optum.png"});
 	                	socket.broadcast.to(socket.room).emit('botEmit', {msg: response.result.fulfillment.speech, user: "bot", img: "../img/optum.png"});
-	                } else {
+	                } else { //AKA the bot did not understand the query
 	                    socket.broadcast.to(socket.room).emit('receive', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: "../img/optum.png"});
 	                    socket.broadcast.to(socket.room).emit('botEmit', {msg: 'Hmm, I don\'t quite have an answer for you, let me check further.', user: "bot", img: "../img/optum.png"});
+	                    //Call client side function which prompts the nurse to enter a message
 	                    socket.broadcast.emit('alert' , data);  
 	                }
 	            });
@@ -168,7 +160,7 @@ module.exports = function(app,io, request, app2, apiai){
 	        }
 	        //Handles the bot training and metrics function of the proof of concept
 	        else if (data.user == 'bot'){
-
+	        	//If the nurse wishes to add an entitiy..
 	            if (data.msg.lastIndexOf("ADD") != -1){
 	                var drug = data.msg.split(": ");
 	                console.log(drug);
@@ -181,22 +173,20 @@ module.exports = function(app,io, request, app2, apiai){
 		                },
 		                url: 'https://api.api.ai/v1/entities/drug',
 		            }, function(error, response, body){
+		            	//Upon response from the API.AI API of all the entries present in the drug entity
 						body = JSON.parse(body);
 
-						console.log(body.entries.length);
-		            	console.log(body.entries[1].value);
+						//Grab an drug's existing synonyms
 		                for (var i=0; i<body.entries.length; i++){
 			                if (body.entries[i].value == drug[1]){
-			                	console.log(body.entries[i].synonyms[0]);
-			                	console.log('hello match here!');
 			                	for (var j=0; j<body.entries[i].synonyms.length; j++){
 			                		synonyms.push(body.entries[i].synonyms[j]);
 			                	}
 			                }
 			            }
-			            console.log(synonyms);
-			            console.log(drug);
+			            
 			            synonyms.push(drug[2]);
+			            //If we are adding a new entity make this API call to API.AI
 			            if (drug[2] == null){
 			                drugNew.push(drug[1]);
 			                request.put({
@@ -212,12 +202,11 @@ module.exports = function(app,io, request, app2, apiai){
 			                    },
 			                    json: true
 			                }, function(error, response, body){
-			                	console.log(drug[2]);
-			                	console.log("error below");
 			                	console.log(body);
 			                	console.log(error);
 			                });
 		            	}
+		            	//If we are adding a new synonym to an existing entity make this API call to API.AI
 			            else {
 			            	drugMis.push(drug[1]);
 							request.put({
@@ -233,8 +222,6 @@ module.exports = function(app,io, request, app2, apiai){
 			                    },
 			                    json: true
 			                }, function(error, response, body){
-			                	console.log(drug[2]);
-			                	console.log("error below");
 			                	console.log(body);
 			                	console.log(error);
 			                });
@@ -242,6 +229,7 @@ module.exports = function(app,io, request, app2, apiai){
 
 		            });
 	            }
+	            //If the nurse wishes to view bot metrics..
 	            else if(data.msg.lastIndexOf("METRICS") != -1){
 					var numDrugs = drugNew.length + drugMis.length;
 					var noDupNew = drugNew.unique();
@@ -262,7 +250,6 @@ module.exports = function(app,io, request, app2, apiai){
 						printMis = noDupMis.toString();
 
 					}
-					
 					var mString = "Drugs that were new: " + printNew + " | " + "Drugs That Were Misspelled: " + printMis + " | " +"Number of Drug Additions: " + numDrugs + " | " + "Number of User Queries: " + numQ;
 					socket.broadcast.emit('botEmit', {msg: mString, user: "bot", img: "../img/optum.png"});
 	            }

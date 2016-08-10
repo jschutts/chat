@@ -1,7 +1,7 @@
 {
-  "name": "NodeChatSystem",
+  "name": "chat",
   "version": "0.0.1",
-  "description": "Realtime chat system for Tutorialzine.com",
+  "description": "Chat frontend for MedBot with prompts",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,13 +11,12 @@
     "chat",
     "system"
   ],
-  "author": "Nikolay Anastasov",
+  "author": "Mac Watrous & John Schutts",
   "license": "MIT",
   "dependencies": {
     "apiai": "2.0.5",
     "ejs": "^1.0.0",
     "express": "^4.8.2",
-    "gravatar": "~1.0.6",
     "socket.io": "1.0.6",
     "request": "2.73.0"
   }

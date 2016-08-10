@@ -43,9 +43,9 @@ $(function(){
 		leftImage = $("#leftImage"),
 		noMessagesImage = $("#noMessagesImage");
 
-	// this is a chat prompt
 	var msg = [];
-
+	
+	// this is a chat prompt
 	var substate = {
 		state0: {
 			title: 'Unkown User Query',
@@ -93,7 +93,6 @@ $(function(){
 		socket.emit('load', id);
 	});
 
-	// save the gravatar url
 	socket.on('img', function(data){
 		img = data;
 	});
@@ -129,7 +128,7 @@ $(function(){
 				}
 				email = "as123d@hotmail.com";
 
-					socket.emit('login', {user: name, avatar: "../img/jervis.png", id: id});
+					socket.emit('login', {user: name, avatar: "../img/unnamed.jpg", id: id});
 			});
 		}
 
@@ -224,6 +223,7 @@ $(function(){
 		socket.emit('msg', {msg: data.msg, user: data.user, img: data.img});
 	});
 
+	// Nurse prompting
 	socket.on('alert', function(data){
 		$.prompt(substate,{
         	close: function(e,v,m,f){
@@ -234,22 +234,21 @@ $(function(){
         		msg[0] = msg[0].replace(/,/g , ";");
         		msg = msg.toString();
 	        	msg = msg.split(",");
-	        	console.log(msg);
-	        	console.log(msg[0]);
+	        	//If the nurse clicks the unsure button
         		if (msg[0] == '' && msg[1] == ''){
         			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
         			socket.emit('alert', msg, data);
         		}
+        		//If the nurse just wants to respond but not train
         		else if (msg[1] == ''){
         			msg = msg[0];
         			socket.emit('alert', msg, data);
         		}
+        		//If the nurse wants to respond and then train
         		else {
         			socket.emit('alert', msg[0], data);
 	        		msg = "ADDE: " + msg[1] + ": " + msg[2];
-	        		console.log(msg);
 	        		socket.emit('msg', {msg: msg, user: 'bot', img: "../img/optum.png"});
-	        		//socket.emit('msg', );
         		}
         	},
 			classes: {

@@ -16,15 +16,13 @@ var port = process.env.PORT || 3000;
 
 var io = require('socket.io').listen(app.listen(port));
 
-// Require the configuration and the routes files, and pass
-// the app and io as arguments to the returned functions.
+// Require the configuration, apiai agent instance and the routes files, and pass
+// the app, apiai, and io as arguments to the returned functions.
 var request = require('request');
 var apiai = require('apiai');
-var app2 = apiai("0b25372273e042f29d6333faec6d4065");
+var app2 = apiai("0b25372273e042f29d6333faec6d4065"); //API developer token
 
 require('./config')(app, io);
 require('./routes')(app, io, request, app2, apiai);
 
-//comment
-
-console.log('Your application is running on http://localhost:' + port);
+console.log('Your application is running on port: ' + port);
