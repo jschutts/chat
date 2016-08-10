@@ -236,7 +236,7 @@ $(function(){
 	        	msg = msg.split(",");
 	        	//If the nurse clicks the unsure button
         		if (msg[0] == '' && msg[1] == ''){
-        			msg = "I still couldn't come up with anything, I reccomend you talk to a doctor.";
+        			msg = "I still couldn't come up with anything, I recommend you talk to a doctor.";
         			socket.emit('alert', msg, data);
         		}
         		//If the nurse just wants to respond but not train
